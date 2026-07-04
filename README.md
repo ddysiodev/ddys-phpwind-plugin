@@ -16,7 +16,7 @@ Official PHPWind extension for the [DDYS](https://ddys.io/) API. It adds fronten
 - AppCenter manifest with PHPWind 9 metadata, extension resources, install service, main navigation registration, admin menu, editor app, UBB conversion hook, and read-page fallback hook.
 - Admin settings for API Base URL, source site URL, API Key, timeout, cache TTLs, default count, theme, layout, navigation snippet, and request form.
 - Admin diagnostics for connection tests, cache status, cache clearing, endpoint inspection, and shortcode/page/proxy generation.
-- Frontend pages for latest, hot, search, calendar, movie detail, collections, collection detail, and requests.
+- Frontend pages for movies, latest, hot, search, suggestions, calendar, movie detail, sources, related items, comments, collections, collection detail, shares, share detail, requests, activities, users, types, genres, and regions.
 - Post shortcode rendering for `[ddys_*]` tags through PHPWind UBB conversion and read-page fallback.
 - WindEditor toolbar button for inserting common DDYS shortcodes.
 - Local JSON proxy under the PHPWind site domain, keeping the API Key server-side.
@@ -41,13 +41,25 @@ Default dynamic entries:
 
 ```text
 index.php?m=app&app=ddys_open
+index.php?m=app&app=ddys_open&c=index&a=run&view=movies&type=movie&genre=drama&region=us&year=2026&sort=latest&page=1&per_page=12
 index.php?m=app&app=ddys_open&c=index&a=run&view=hot
 index.php?m=app&app=ddys_open&c=index&a=run&view=search
+index.php?m=app&app=ddys_open&c=index&a=run&view=suggest&q=interstellar
 index.php?m=app&app=ddys_open&c=index&a=run&view=calendar
 index.php?m=app&app=ddys_open&c=index&a=run&view=movie&slug=this-tempting-madness
+index.php?m=app&app=ddys_open&c=index&a=run&view=sources&slug=this-tempting-madness
+index.php?m=app&app=ddys_open&c=index&a=run&view=related&slug=this-tempting-madness
+index.php?m=app&app=ddys_open&c=index&a=run&view=comments&slug=this-tempting-madness
 index.php?m=app&app=ddys_open&c=index&a=run&view=collections
 index.php?m=app&app=ddys_open&c=index&a=run&view=collection&slug=editor-choice
+index.php?m=app&app=ddys_open&c=index&a=run&view=shares
+index.php?m=app&app=ddys_open&c=index&a=run&view=share&id=1
 index.php?m=app&app=ddys_open&c=index&a=run&view=requests
+index.php?m=app&app=ddys_open&c=index&a=run&view=activities
+index.php?m=app&app=ddys_open&c=index&a=run&view=user&username=demo
+index.php?m=app&app=ddys_open&c=index&a=run&view=types
+index.php?m=app&app=ddys_open&c=index&a=run&view=genres
+index.php?m=app&app=ddys_open&c=index&a=run&view=regions
 ```
 
 Local proxy examples:
@@ -56,6 +68,8 @@ Local proxy examples:
 index.php?m=app&app=ddys_open&c=index&a=api&route=latest&limit=6
 index.php?m=app&app=ddys_open&c=index&a=api&route=movie&slug=this-tempting-madness
 index.php?m=app&app=ddys_open&c=index&a=api&route=collections&page=1
+index.php?m=app&app=ddys_open&c=index&a=api&route=shares&page=1
+index.php?m=app&app=ddys_open&c=index&a=api&route=user&username=demo
 ```
 
 Request form endpoint:

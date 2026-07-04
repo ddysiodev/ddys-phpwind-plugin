@@ -90,20 +90,35 @@
 
   function buildPage(root, tag, limit, page, value) {
     var view = 'latest';
+    if (tag === 'ddys_movies') view = 'movies';
     if (tag === 'ddys_hot') view = 'hot';
     if (tag === 'ddys_search') view = 'search';
+    if (tag === 'ddys_suggest') view = 'suggest';
     if (tag === 'ddys_calendar') view = 'calendar';
-    if (tag === 'ddys_movie' || tag === 'ddys_sources' || tag === 'ddys_related' || tag === 'ddys_comments') view = 'movie';
+    if (tag === 'ddys_movie') view = 'movie';
+    if (tag === 'ddys_sources') view = 'sources';
+    if (tag === 'ddys_related') view = 'related';
+    if (tag === 'ddys_comments') view = 'comments';
     if (tag === 'ddys_collections') view = 'collections';
     if (tag === 'ddys_collection') view = 'collection';
+    if (tag === 'ddys_shares') view = 'shares';
+    if (tag === 'ddys_share') view = 'share';
     if (tag === 'ddys_requests' || tag === 'ddys_request_form') view = 'requests';
+    if (tag === 'ddys_activities') view = 'activities';
+    if (tag === 'ddys_user') view = 'user';
+    if (tag === 'ddys_types') view = 'types';
+    if (tag === 'ddys_genres') view = 'genres';
+    if (tag === 'ddys_regions') view = 'regions';
     var url = new URL(root, window.location.href);
     url.searchParams.set('app', 'ddys_open');
     if (view !== 'latest') url.searchParams.set('view', view);
-    if (view === 'movie' || view === 'collection') addParam(url.searchParams, 'slug', value || 'this-tempting-madness');
-    if (view === 'search') addParam(url.searchParams, 'q', value || '');
-    if (limit) addParam(url.searchParams, 'limit', limit);
-    if (page && /^(collections|requests)$/.test(view)) addParam(url.searchParams, 'page', page);
+    if (/^(movie|sources|related|comments|collection)$/.test(view)) addParam(url.searchParams, 'slug', value || 'this-tempting-madness');
+    if (view === 'share') addParam(url.searchParams, 'id', value || '1');
+    if (view === 'user') addParam(url.searchParams, 'username', value || 'demo');
+    if (view === 'search' || view === 'suggest') addParam(url.searchParams, 'q', value || '');
+    if (limit && /^(latest|hot|suggest)$/.test(view)) addParam(url.searchParams, 'limit', limit);
+    if (limit && /^(movies|search|collections|shares|requests|activities|comments)$/.test(view)) addParam(url.searchParams, 'per_page', limit);
+    if (page && /^(movies|collections|shares|requests|activities|comments)$/.test(view)) addParam(url.searchParams, 'page', page);
     return url.toString();
   }
 
@@ -116,6 +131,7 @@
     if (route === 'user') addParam(url.searchParams, 'username', value || 'demo');
     if (route === 'search' || route === 'suggest') addParam(url.searchParams, 'q', value || '');
     if (limit && /^(latest|hot|suggest)$/.test(route)) addParam(url.searchParams, 'limit', limit);
+    if (limit && /^(movies|search|collections|shares|requests|activities|comments)$/.test(route)) addParam(url.searchParams, 'per_page', limit);
     if (page && /^(movies|collections|shares|requests|activities|comments)$/.test(route)) addParam(url.searchParams, 'page', page);
     return url.toString();
   }

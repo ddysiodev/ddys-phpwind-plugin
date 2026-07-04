@@ -233,12 +233,38 @@ function ddys_open_plugin_url($path = '')
 
 function ddys_open_page_url($view = 'latest', $params = array())
 {
-    $view = ddys_open_choice($view, array('latest', 'hot', 'search', 'calendar', 'movie', 'collections', 'collection', 'requests'), 'latest');
+    $view = ddys_open_choice($view, ddys_open_page_views(), 'latest');
     $query = array_merge(array('view' => $view), (array)$params);
     if ($view === 'latest') {
         unset($query['view']);
     }
     return ddys_open_append_query(ddys_open_plugin_page_url(), $query);
+}
+
+function ddys_open_page_views()
+{
+    return array(
+        'movies',
+        'latest',
+        'hot',
+        'search',
+        'suggest',
+        'calendar',
+        'movie',
+        'sources',
+        'related',
+        'comments',
+        'collections',
+        'collection',
+        'shares',
+        'share',
+        'requests',
+        'activities',
+        'user',
+        'types',
+        'genres',
+        'regions'
+    );
 }
 
 function ddys_open_endpoint_url($endpoint)

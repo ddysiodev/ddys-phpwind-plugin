@@ -66,6 +66,29 @@ const shortcodes = [
   'ddys_request_form'
 ];
 
+const pageViews = [
+  'movies',
+  'latest',
+  'hot',
+  'search',
+  'suggest',
+  'calendar',
+  'movie',
+  'sources',
+  'related',
+  'comments',
+  'collections',
+  'collection',
+  'shares',
+  'share',
+  'requests',
+  'activities',
+  'user',
+  'types',
+  'genres',
+  'regions'
+];
+
 for (const file of requiredFiles) {
   await mustExist(file);
 }
@@ -243,6 +266,10 @@ async function checkSource() {
   ]) {
     assert(security.includes(fragment), `security.php missing ${fragment}`);
   }
+  assert(security.includes('function ddys_open_page_views'), 'security.php missing unified page view allowlist.');
+  for (const view of pageViews) {
+    assert(security.includes(`'${view}'`), `security.php missing page view ${view}`);
+  }
 
   for (const fragment of [
     'ddys_open_cache_key',
@@ -280,6 +307,7 @@ async function checkSource() {
   for (const fragment of [
     'ddys_open_frontend_assets() .',
     'ddys-phpwind-nav nav-link',
+    'ddys_open_page_views()',
     'ddys_open_render_page',
     'ddys_open_page_tabs',
     'ddys_open_render_request_form',
@@ -296,11 +324,17 @@ async function checkSource() {
   ]) {
     assert(render.includes(fragment), `render.php missing ${fragment}`);
   }
+  for (const view of pageViews) {
+    assert(render.includes(`$view === '${view}'`) || render.includes(`'${view}' =>`), `render.php missing frontend view ${view}`);
+  }
 
   assert(!shortcode.includes('log_content'), 'shortcode.php must not contain Emlog log_content leftovers.');
   assert(!shortcode.includes('article_content_echo'), 'shortcode.php must not contain Emlog article hook leftovers.');
   assert(frontendJs.includes('!window.fetch') && frontendJs.includes('FormData') && frontendJs.includes('credentials: \'same-origin\''), 'frontend.js request form handling is incomplete.');
   assert(adminJs.includes("url.searchParams.set('app', 'ddys_open')") && adminJs.includes("kind === 'page'") && adminJs.includes("kind === 'proxy'"), 'admin.js generator is incomplete.');
+  for (const view of ['movies', 'suggest', 'sources', 'related', 'comments', 'shares', 'share', 'activities', 'user', 'types', 'genres', 'regions']) {
+    assert(adminJs.includes(`view = '${view}'`), `admin.js page generator missing view ${view}`);
+  }
   assert(editorJs.includes("var appName = 'ddys_open'") && editorJs.includes('WindEditor.initOpenApp[appName]') && editorJs.includes('[ddys_latest limit="12"]'), 'editorApp.js is incomplete.');
 
   for (const rel of [
@@ -356,6 +390,11 @@ async function checkDocs() {
   assert(zh.includes('themes/extres/ddys_open') && en.includes('themes/extres/ddys_open'), 'README files missing extension resource path.');
   assert(zh.includes('admin.php?m=app&app=ddys_open&c=manage&a=run') && en.includes('admin.php?m=app&app=ddys_open&c=manage&a=run'), 'README files missing admin route.');
   assert(zh.includes('index.php?m=app&app=ddys_open&c=index&a=api&route=latest') && en.includes('index.php?m=app&app=ddys_open&c=index&a=api&route=latest'), 'README files missing proxy route.');
+  assert(zh.includes('view=movies&type=movie') && en.includes('view=movies&type=movie'), 'README files missing movies frontend route.');
+  assert(zh.includes('view=sources&slug=this-tempting-madness') && en.includes('view=sources&slug=this-tempting-madness'), 'README files missing sources frontend route.');
+  assert(zh.includes('view=share&id=1') && en.includes('view=share&id=1'), 'README files missing share frontend route.');
+  assert(zh.includes('view=user&username=demo') && en.includes('view=user&username=demo'), 'README files missing user frontend route.');
+  assert(zh.includes('view=types') && en.includes('view=types'), 'README files missing dictionary frontend routes.');
   assert(zh.includes('node tools/check.mjs') && en.includes('node tools/check.mjs'), 'README files missing development check command.');
   for (const shortcodeName of shortcodes) {
     assert(zh.includes(`[${shortcodeName}`), `Chinese README missing ${shortcodeName}`);

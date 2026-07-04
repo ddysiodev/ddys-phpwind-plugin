@@ -417,12 +417,30 @@ function ddys_open_print_nav_item()
 
 function ddys_open_render_page($view, $params = array())
 {
-    $view = ddys_open_choice($view, array('latest', 'hot', 'search', 'calendar', 'movie', 'collections', 'collection', 'requests'), 'latest');
+    $view = ddys_open_choice($view, ddys_open_page_views(), 'latest');
+    if ($view === 'movies') {
+        return ddys_open_render_shortcode('ddys_movies', array(
+            'type' => isset($params['type']) ? $params['type'] : '',
+            'genre' => isset($params['genre']) ? $params['genre'] : '',
+            'region' => isset($params['region']) ? $params['region'] : '',
+            'year' => isset($params['year']) ? $params['year'] : '',
+            'sort' => isset($params['sort']) ? $params['sort'] : 'latest',
+            'page' => isset($params['page']) ? $params['page'] : 1,
+            'per_page' => isset($params['per_page']) && $params['per_page'] !== '' ? $params['per_page'] : (isset($params['limit']) ? $params['limit'] : 12)
+        ));
+    }
     if ($view === 'hot') {
         return ddys_open_render_shortcode('ddys_hot', array('limit' => isset($params['limit']) ? $params['limit'] : 12));
     }
     if ($view === 'search') {
-        return ddys_open_render_shortcode('ddys_search', array('q' => isset($params['q']) ? $params['q'] : '', 'type' => isset($params['type']) ? $params['type'] : 'movie'));
+        return ddys_open_render_shortcode('ddys_search', array('q' => isset($params['q']) ? $params['q'] : '', 'type' => isset($params['type']) ? $params['type'] : 'movie', 'per_page' => isset($params['per_page']) ? $params['per_page'] : ''));
+    }
+    if ($view === 'suggest') {
+        $q = isset($params['q']) ? ddys_open_scalar($params['q']) : '';
+        if ($q === '') {
+            return ddys_open_render_empty('请输入关键词以获取搜索建议。');
+        }
+        return ddys_open_render_shortcode('ddys_suggest', array('q' => $q, 'limit' => isset($params['limit']) ? $params['limit'] : 8));
     }
     if ($view === 'calendar') {
         return ddys_open_render_shortcode('ddys_calendar', array('year' => isset($params['year']) ? $params['year'] : '', 'month' => isset($params['month']) ? $params['month'] : ''));
@@ -430,14 +448,44 @@ function ddys_open_render_page($view, $params = array())
     if ($view === 'movie') {
         return ddys_open_render_shortcode('ddys_movie', array('slug' => isset($params['slug']) ? $params['slug'] : ''));
     }
+    if ($view === 'sources') {
+        return ddys_open_render_shortcode('ddys_sources', array('slug' => isset($params['slug']) ? $params['slug'] : ''));
+    }
+    if ($view === 'related') {
+        return ddys_open_render_shortcode('ddys_related', array('slug' => isset($params['slug']) ? $params['slug'] : ''));
+    }
+    if ($view === 'comments') {
+        return ddys_open_render_shortcode('ddys_comments', array('slug' => isset($params['slug']) ? $params['slug'] : '', 'page' => isset($params['page']) ? $params['page'] : 1, 'per_page' => isset($params['per_page']) ? $params['per_page'] : 12));
+    }
     if ($view === 'collections') {
-        return ddys_open_render_shortcode('ddys_collections', array('page' => isset($params['page']) ? $params['page'] : 1));
+        return ddys_open_render_shortcode('ddys_collections', array('page' => isset($params['page']) ? $params['page'] : 1, 'per_page' => isset($params['per_page']) ? $params['per_page'] : 12));
     }
     if ($view === 'collection') {
         return ddys_open_render_shortcode('ddys_collection', array('slug' => isset($params['slug']) ? $params['slug'] : ''));
     }
+    if ($view === 'shares') {
+        return ddys_open_render_shortcode('ddys_shares', array('page' => isset($params['page']) ? $params['page'] : 1, 'per_page' => isset($params['per_page']) ? $params['per_page'] : 12));
+    }
+    if ($view === 'share') {
+        return ddys_open_render_shortcode('ddys_share', array('id' => isset($params['id']) ? $params['id'] : ''));
+    }
     if ($view === 'requests') {
-        return ddys_open_render_shortcode('ddys_requests', array('page' => isset($params['page']) ? $params['page'] : 1));
+        return ddys_open_render_shortcode('ddys_requests', array('page' => isset($params['page']) ? $params['page'] : 1, 'per_page' => isset($params['per_page']) ? $params['per_page'] : 12));
+    }
+    if ($view === 'activities') {
+        return ddys_open_render_shortcode('ddys_activities', array('page' => isset($params['page']) ? $params['page'] : 1, 'per_page' => isset($params['per_page']) ? $params['per_page'] : 12));
+    }
+    if ($view === 'user') {
+        return ddys_open_render_shortcode('ddys_user', array('username' => isset($params['username']) ? $params['username'] : ''));
+    }
+    if ($view === 'types') {
+        return ddys_open_render_shortcode('ddys_types', array());
+    }
+    if ($view === 'genres') {
+        return ddys_open_render_shortcode('ddys_genres', array());
+    }
+    if ($view === 'regions') {
+        return ddys_open_render_shortcode('ddys_regions', array());
     }
     return ddys_open_render_shortcode('ddys_latest', array('limit' => isset($params['limit']) ? $params['limit'] : 12));
 }
@@ -445,12 +493,19 @@ function ddys_open_render_page($view, $params = array())
 function ddys_open_page_tabs($active)
 {
     $tabs = array(
+        'movies' => '筛选',
         'latest' => '最新',
         'hot' => '热门',
         'search' => '搜索',
+        'suggest' => '建议',
         'calendar' => '日历',
         'collections' => '片单',
-        'requests' => '求片'
+        'shares' => '分享',
+        'requests' => '求片',
+        'activities' => '动态',
+        'types' => '类型',
+        'genres' => '题材',
+        'regions' => '地区'
     );
     $html = '<nav class="ddys-phpwind-tabs">';
     foreach ($tabs as $view => $label) {
@@ -463,14 +518,26 @@ function ddys_open_page_tabs($active)
 function ddys_open_page_title($view)
 {
     $titles = array(
+        'movies' => '低端影视影片筛选',
         'latest' => '低端影视最新',
         'hot' => '低端影视热门',
         'search' => '搜索低端影视',
+        'suggest' => '低端影视搜索建议',
         'calendar' => '低端影视日历',
         'movie' => '低端影视影片详情',
+        'sources' => '低端影视影片资源',
+        'related' => '低端影视相关推荐',
+        'comments' => '低端影视评论',
         'collections' => '低端影视片单',
         'collection' => '低端影视片单详情',
-        'requests' => '低端影视求片'
+        'shares' => '低端影视分享',
+        'share' => '低端影视分享详情',
+        'requests' => '低端影视求片',
+        'activities' => '低端影视动态',
+        'user' => '低端影视用户',
+        'types' => '低端影视类型',
+        'genres' => '低端影视题材',
+        'regions' => '低端影视地区'
     );
     return isset($titles[$view]) ? $titles[$view] : '低端影视';
 }

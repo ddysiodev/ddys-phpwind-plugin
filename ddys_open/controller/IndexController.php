@@ -14,12 +14,18 @@ class IndexController extends PwBaseController {
 		$view = ddys_open_get('view', 'latest');
 		$params = array(
 			'limit' => ddys_open_get('limit'),
+			'per_page' => ddys_open_get('per_page'),
 			'page' => ddys_open_get('page'),
 			'q' => ddys_open_get('q'),
 			'type' => ddys_open_get('type'),
+			'genre' => ddys_open_get('genre'),
+			'region' => ddys_open_get('region'),
+			'sort' => ddys_open_get('sort'),
 			'year' => ddys_open_get('year'),
 			'month' => ddys_open_get('month'),
-			'slug' => ddys_open_get('slug')
+			'slug' => ddys_open_get('slug'),
+			'id' => ddys_open_get('id'),
+			'username' => ddys_open_get('username')
 		);
 		$assets = ddys_open_frontend_assets();
 		$content = ddys_open_page_tabs($view) . ddys_open_render_page($view, $params);
@@ -36,4 +42,3 @@ class IndexController extends PwBaseController {
 		ddys_open_json_response(ddys_open_handle_request_form());
 	}
 }
-

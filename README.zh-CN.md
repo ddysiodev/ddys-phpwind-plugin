@@ -16,7 +16,7 @@
 - AppCenter Manifest：包含 PHPWind 9 元数据、资源目录、安装服务、主导航注册、后台菜单、编辑器应用、UBB 转换钩子和帖子阅读页兜底钩子。
 - 后台配置：API Base URL、源站 URL、API Key、请求超时、缓存 TTL、默认数量、主题、布局、导航片段和求片表单。
 - 后台诊断：连接测试、缓存状态、缓存清理、入口 URL 检查，以及短代码、前台页面和代理 URL 生成器。
-- 前台页面：最新、热门、搜索、日历、影片详情、片单、片单详情和求片列表。
+- 前台页面：影片筛选、最新、热门、搜索、搜索建议、日历、影片详情、影片资源、相关推荐、评论、片单、片单详情、分享、分享详情、求片、动态、用户、类型、题材和地区。
 - 帖子短代码：通过 PHPWind UBB 转换和阅读页兜底渲染 `[ddys_*]` 标签。
 - 编辑器按钮：在 WindEditor 工具栏插入常用 DDYS 短代码。
 - 本地 JSON 代理：浏览器请求站点本地扩展入口，API Key 只保存在服务端。
@@ -41,13 +41,25 @@ Release ZIP 必须包含顶层 `ddys_open/` 目录，因为 PHPWind 安装器会
 
 ```text
 index.php?m=app&app=ddys_open
+index.php?m=app&app=ddys_open&c=index&a=run&view=movies&type=movie&genre=drama&region=us&year=2026&sort=latest&page=1&per_page=12
 index.php?m=app&app=ddys_open&c=index&a=run&view=hot
 index.php?m=app&app=ddys_open&c=index&a=run&view=search
+index.php?m=app&app=ddys_open&c=index&a=run&view=suggest&q=interstellar
 index.php?m=app&app=ddys_open&c=index&a=run&view=calendar
 index.php?m=app&app=ddys_open&c=index&a=run&view=movie&slug=this-tempting-madness
+index.php?m=app&app=ddys_open&c=index&a=run&view=sources&slug=this-tempting-madness
+index.php?m=app&app=ddys_open&c=index&a=run&view=related&slug=this-tempting-madness
+index.php?m=app&app=ddys_open&c=index&a=run&view=comments&slug=this-tempting-madness
 index.php?m=app&app=ddys_open&c=index&a=run&view=collections
 index.php?m=app&app=ddys_open&c=index&a=run&view=collection&slug=editor-choice
+index.php?m=app&app=ddys_open&c=index&a=run&view=shares
+index.php?m=app&app=ddys_open&c=index&a=run&view=share&id=1
 index.php?m=app&app=ddys_open&c=index&a=run&view=requests
+index.php?m=app&app=ddys_open&c=index&a=run&view=activities
+index.php?m=app&app=ddys_open&c=index&a=run&view=user&username=demo
+index.php?m=app&app=ddys_open&c=index&a=run&view=types
+index.php?m=app&app=ddys_open&c=index&a=run&view=genres
+index.php?m=app&app=ddys_open&c=index&a=run&view=regions
 ```
 
 本地代理示例：
@@ -56,6 +68,8 @@ index.php?m=app&app=ddys_open&c=index&a=run&view=requests
 index.php?m=app&app=ddys_open&c=index&a=api&route=latest&limit=6
 index.php?m=app&app=ddys_open&c=index&a=api&route=movie&slug=this-tempting-madness
 index.php?m=app&app=ddys_open&c=index&a=api&route=collections&page=1
+index.php?m=app&app=ddys_open&c=index&a=api&route=shares&page=1
+index.php?m=app&app=ddys_open&c=index&a=api&route=user&username=demo
 ```
 
 求片提交入口：
