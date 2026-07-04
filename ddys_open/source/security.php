@@ -187,10 +187,18 @@ function ddys_open_normalize_query_value($key, $value)
         return ddys_open_int_range($value, 1, 1, 999);
     }
     if ($key === 'year') {
-        return ddys_open_int_range($value, 0, 0, 2099);
+        if (!preg_match('/^\d{4}$/', $value)) {
+            return '';
+        }
+        $year = (int)$value;
+        return $year >= 1900 && $year <= 2099 ? $year : '';
     }
     if ($key === 'month') {
-        return ddys_open_int_range($value, 0, 0, 12);
+        if (!preg_match('/^\d{1,2}$/', $value)) {
+            return '';
+        }
+        $month = (int)$value;
+        return $month >= 1 && $month <= 12 ? $month : '';
     }
     return $value;
 }

@@ -11,7 +11,7 @@ class IndexController extends PwBaseController {
 	}
 
 	public function run() {
-		$view = ddys_open_get('view', 'latest');
+		$view = ddys_open_choice(ddys_open_get('view', 'latest'), ddys_open_page_views(), 'latest');
 		$params = array(
 			'limit' => ddys_open_get('limit'),
 			'per_page' => ddys_open_get('per_page'),

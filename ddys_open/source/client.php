@@ -195,7 +195,7 @@ function ddys_open_proxy_path($route)
         case 'collections': return '/collections';
         case 'collection': return $slug === '' ? '' : '/collections/' . rawurlencode($slug);
         case 'shares': return '/shares';
-        case 'share': return $id === '' ? '' : '/shares/' . intval($id);
+        case 'share': return preg_match('/^\d+$/', $id) && (int)$id > 0 ? '/shares/' . intval($id) : '';
         case 'requests': return '/requests';
         case 'activities': return '/activities';
         case 'user': return $username === '' ? '' : '/user/' . rawurlencode($username);

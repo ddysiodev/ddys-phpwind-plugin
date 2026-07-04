@@ -157,6 +157,7 @@ async function checkControllers() {
     'beforeAction',
     'ddys_open_bootstrap',
     'public function run()',
+    "ddys_open_choice(ddys_open_get('view', 'latest'), ddys_open_page_views(), 'latest')",
     'setOutput(ddys_open_page_title($view), \'ddysTitle\')',
     'ddys_open_page_tabs($view)',
     'ddys_open_render_page($view, $params)',
@@ -262,7 +263,11 @@ async function checkSource() {
     'ddys_open_hash_equals',
     'ddys_open_json_response',
     'JSON_UNESCAPED_UNICODE',
-    'ddys_open_safe_media_url'
+    'ddys_open_safe_media_url',
+    "preg_match('/^\\d{4}$/', $value)",
+    "return $year >= 1900 && $year <= 2099 ? $year : '';",
+    "preg_match('/^\\d{1,2}$/', $value)",
+    "return $month >= 1 && $month <= 12 ? $month : '';"
   ]) {
     assert(security.includes(fragment), `security.php missing ${fragment}`);
   }
@@ -288,6 +293,7 @@ async function checkSource() {
     'ddys_open_proxy_path',
     'ddys_open_proxy_query',
     'ddys_open_proxy_response',
+    "preg_match('/^\\d+$/', $id) && (int)$id > 0",
     'Authorization: Bearer',
     "allow_url_fopen",
     "!ini_get('open_basedir')",
