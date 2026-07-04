@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+	<application>
+		<name>低端影视 API</name>
+		<alias>ddys_open</alias>
+		<version>0.1.0</version>
+		<pw-version>9.0</pw-version>
+		<type>app</type>
+		<description>低端影视 API 的 PHPWind 官方扩展，提供前台页面、帖子短代码、编辑器按钮、本地 JSON 代理、缓存、诊断和服务端求片表单。</description>
+		<charset>utf-8</charset>
+		<logo>images/logo.png</logo>
+		<website>https://github.com/ddysiodev/ddys-phpwind-plugin</website>
+		<author-name>DDYS</author-name>
+		<author-email>dev@ddys.io</author-email>
+		<author-icon>https://ddys.io/</author-icon>
+	</application>
+	<res>resource</res>
+	<install>EXT:ddys_open.service.srv.App_DdysOpen_InstallDo</install>
+	<installation-service>nav_main</installation-service>
+	<inject-services>
+		<s_admin_menu>
+			<ddys_open>
+				<class>EXT:ddys_open.service.srv.App_DdysOpen_AdminMenuDo</class>
+				<loadway>load</loadway>
+				<method>getAdminMenu</method>
+				<description>DDYS API admin menu</description>
+			</ddys_open>
+		</s_admin_menu>
+		<s_PwEditor_app>
+			<ddys_open>
+				<class>EXT:ddys_open.service.srv.App_DdysOpen_EditorAppDo</class>
+				<loadway>load</loadway>
+				<method>getEditorApp</method>
+				<description>DDYS shortcode editor button</description>
+			</ddys_open>
+		</s_PwEditor_app>
+		<s_PwUbbCode_convert>
+			<ddys_open>
+				<class>EXT:ddys_open.service.srv.App_DdysOpen_UbbCodeDo</class>
+				<loadway>load</loadway>
+				<method>parse</method>
+				<description>Render DDYS shortcodes during UBB conversion</description>
+			</ddys_open>
+		</s_PwUbbCode_convert>
+		<c_read_run>
+			<ddys_open>
+				<class>EXT:ddys_open.service.srv.App_DdysOpen_ThreadDisplayInjector</class>
+				<method>run</method>
+				<description>Fallback DDYS shortcode rendering on read pages</description>
+			</ddys_open>
+		</c_read_run>
+	</inject-services>
+</manifest>

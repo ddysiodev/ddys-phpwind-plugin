@@ -1,0 +1,248 @@
+.ddys-phpwind {
+  --ddys-phpwind-border: #d8dee8;
+  --ddys-phpwind-text: #202734;
+  --ddys-phpwind-muted: #667085;
+  --ddys-phpwind-panel: #ffffff;
+  --ddys-phpwind-soft: #f4f7fa;
+  --ddys-phpwind-accent: #0f766e;
+  color: var(--ddys-phpwind-text);
+  margin: 20px 0;
+}
+
+.ddys-phpwind-theme-dark {
+  --ddys-phpwind-border: #374151;
+  --ddys-phpwind-text: #e5e7eb;
+  --ddys-phpwind-muted: #aeb6c2;
+  --ddys-phpwind-panel: #111827;
+  --ddys-phpwind-soft: #1f2937;
+  --ddys-phpwind-accent: #2dd4bf;
+}
+
+.ddys-phpwind-items {
+  display: grid;
+  grid-template-columns: repeat(var(--ddys-phpwind-columns, 4), minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ddys-phpwind-layout-list .ddys-phpwind-items,
+.ddys-phpwind-layout-compact .ddys-phpwind-items {
+  grid-template-columns: 1fr;
+}
+
+.ddys-phpwind-card {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--ddys-phpwind-border);
+  border-radius: 8px;
+  background: var(--ddys-phpwind-panel);
+}
+
+.ddys-phpwind-layout-grid .ddys-phpwind-card {
+  flex-direction: column;
+}
+
+.ddys-phpwind-poster {
+  flex: 0 0 96px;
+  background: var(--ddys-phpwind-soft);
+  aspect-ratio: 2 / 3;
+}
+
+.ddys-phpwind-layout-grid .ddys-phpwind-poster {
+  width: 100%;
+  flex-basis: auto;
+}
+
+.ddys-phpwind-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ddys-phpwind-card-body {
+  min-width: 0;
+  padding: 12px;
+}
+
+.ddys-phpwind-card-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.ddys-phpwind-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ddys-phpwind-card-title a:hover {
+  color: var(--ddys-phpwind-accent);
+}
+
+.ddys-phpwind-meta,
+.ddys-phpwind-summary,
+.ddys-phpwind-page-meta {
+  color: var(--ddys-phpwind-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ddys-phpwind-description,
+.ddys-phpwind-sources,
+.ddys-phpwind-calendar-day,
+.ddys-phpwind-tags,
+.ddys-phpwind-search,
+.ddys-phpwind-request-form,
+.ddys-phpwind-empty,
+.ddys-phpwind-alert {
+  border: 1px solid var(--ddys-phpwind-border);
+  border-radius: 8px;
+  background: var(--ddys-phpwind-panel);
+  padding: 14px;
+  margin: 14px 0;
+}
+
+.ddys-phpwind-alert-error {
+  border-color: #fecaca;
+  color: #991b1b;
+  background: #fff7f7;
+}
+
+.ddys-phpwind-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ddys-phpwind-tags span,
+.ddys-phpwind-tabs a {
+  border: 1px solid var(--ddys-phpwind-border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: var(--ddys-phpwind-soft);
+}
+
+.ddys-phpwind-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ddys-phpwind-tabs a {
+  color: var(--ddys-phpwind-text);
+  text-decoration: none;
+}
+
+.ddys-phpwind-tabs a.active {
+  border-color: var(--ddys-phpwind-accent);
+  color: var(--ddys-phpwind-accent);
+}
+
+.ddys-phpwind-search,
+.ddys-phpwind-request-form {
+  display: grid;
+  gap: 10px;
+}
+
+.ddys-phpwind-search {
+  grid-template-columns: minmax(0, 1fr) 140px auto;
+}
+
+.ddys-phpwind input,
+.ddys-phpwind select,
+.ddys-phpwind textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--ddys-phpwind-border);
+  border-radius: 6px;
+  padding: 9px 10px;
+  background: var(--ddys-phpwind-panel);
+  color: var(--ddys-phpwind-text);
+}
+
+.ddys-phpwind textarea {
+  min-height: 96px;
+}
+
+.ddys-phpwind button {
+  border: 0;
+  border-radius: 6px;
+  padding: 9px 14px;
+  background: var(--ddys-phpwind-accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.ddys-phpwind button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.ddys-phpwind-status {
+  margin: 0;
+  color: var(--ddys-phpwind-muted);
+}
+
+.ddys-phpwind-page {
+  margin: 0;
+  background: #f5f7fb;
+}
+
+.ddys-phpwind-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.ddys-phpwind-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ddys-phpwind-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #172033;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ddys-phpwind-nav {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ddys-phpwind-nav:hover {
+  color: var(--ddys-phpwind-accent, #0f766e);
+}
+
+.ddys-phpwind-page-content h1 {
+  font-size: 24px;
+  margin: 0 0 14px;
+}
+
+@media (max-width: 760px) {
+  .ddys-phpwind-items {
+    grid-template-columns: 1fr;
+  }
+
+  .ddys-phpwind-search,
+  .ddys-phpwind-page-header {
+    display: block;
+  }
+
+  .ddys-phpwind-search > *,
+  .ddys-phpwind-page-header > * {
+    margin-bottom: 10px;
+  }
+}
+

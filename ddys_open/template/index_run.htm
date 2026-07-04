@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.head' load='true' />
+{$ddysAssets|html}
+</head>
+<body>
+<div class="wrap">
+<template source='TPL:common.header' load='true' />
+	<div class="main_wrap">
+		<div class="bread_crumb">
+			<a href="{@url:run}" class="home" title="{@C:site.info.name}">首页</a><em>&gt;</em><span>{$ddysTitle|html}</span>
+		</div>
+		<div class="main cc">
+			<div class="main_body">
+				<div class="main_content">
+					<div class="box_wrap">
+						<h2 class="box_title">{$ddysTitle|html}</h2>
+						<div class="ct">
+							{$ddysContent|html}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="main_sidebar">
+				<template source='TPL:common.sidebar_2' load='true' />
+			</div>
+		</div>
+	</div>
+<template source='TPL:common.footer' load='true' />
+</div>
+</body>
+</html>

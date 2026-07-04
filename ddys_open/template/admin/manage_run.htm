@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:admin.common.head' />
+{$ddysAdminAssets|html}
+</head>
+<body>
+<div class="wrap J_check_wrap ddys-phpwind-admin">
+	<div class="ddys-phpwind-admin-head">
+		<img src="{@G:url.extres}/ddys_open/images/icon.png" width="32" height="32" alt="">
+		<div>
+			<h2>低端影视 API</h2>
+			<p>PHPWind 官方扩展设置、诊断和生成器。</p>
+		</div>
+	</div>
+	<div class="ddys-phpwind-grid">
+		<form class="J_ajaxForm" action="{$saveUrl|html}" method="post">
+			<input type="hidden" name="ddys_admin_nonce" value="{$adminNonce|html}">
+			<div class="h_a">接口</div>
+			<div class="table_full">
+				<table width="100%">
+					<col class="th"><col width="420"><col>
+					<tr><th>API Base URL</th><td><input class="input length_5" type="text" name="api_base_url" value="{$settings['api_base_url']|html}"></td><td><div class="fun_tips">默认 https://ddys.io/api/v1，可填 Worker Proxy。</div></td></tr>
+					<tr><th>源站 URL</th><td><input class="input length_5" type="text" name="site_base_url" value="{$settings['site_base_url']|html}"></td><td><div class="fun_tips">用于影片外链。</div></td></tr>
+					<tr><th>API Key</th><td><input class="input length_5" type="password" name="api_key" value="{$settings['api_key']|html}" autocomplete="off"></td><td><div class="fun_tips">只保存在服务端，求片提交需要。</div></td></tr>
+					<tr><th>超时</th><td><input class="input length_2" type="number" min="1" max="30" name="timeout" value="{$settings['timeout']|html}"> 秒</td><td></td></tr>
+				</table>
+			</div>
+			<div class="h_a">缓存</div>
+			<div class="table_full">
+				<table width="100%">
+					<col class="th"><col width="420"><col>
+					<tr><th>默认 TTL</th><td><input class="input length_2" type="number" name="default_cache_ttl" value="{$settings['default_cache_ttl']|html}"> 秒</td><td></td></tr>
+					<tr><th>字典 TTL</th><td><input class="input length_2" type="number" name="dictionary_cache_ttl" value="{$settings['dictionary_cache_ttl']|html}"> 秒</td><td></td></tr>
+					<tr><th>新鲜内容 TTL</th><td><input class="input length_2" type="number" name="fresh_cache_ttl" value="{$settings['fresh_cache_ttl']|html}"> 秒</td><td></td></tr>
+					<tr><th>列表 TTL</th><td><input class="input length_2" type="number" name="list_cache_ttl" value="{$settings['list_cache_ttl']|html}"> 秒</td><td></td></tr>
+					<tr><th>详情 TTL</th><td><input class="input length_2" type="number" name="detail_cache_ttl" value="{$settings['detail_cache_ttl']|html}"> 秒</td><td></td></tr>
+					<tr><th>社区 TTL</th><td><input class="input length_2" type="number" name="community_cache_ttl" value="{$settings['community_cache_ttl']|html}"> 秒</td><td></td></tr>
+				</table>
+			</div>
+			<div class="h_a">显示</div>
+			<div class="table_full">
+				<table width="100%">
+					<col class="th"><col width="420"><col>
+					<tr><th>主题</th><td><select name="theme"><option value="auto" {@Pw::isSelected($settings['theme'] == 'auto')|html}>自动</option><option value="light" {@Pw::isSelected($settings['theme'] == 'light')|html}>亮色</option><option value="dark" {@Pw::isSelected($settings['theme'] == 'dark')|html}>暗色</option></select></td><td></td></tr>
+					<tr><th>布局</th><td><select name="layout"><option value="grid" {@Pw::isSelected($settings['layout'] == 'grid')|html}>网格</option><option value="list" {@Pw::isSelected($settings['layout'] == 'list')|html}>列表</option><option value="compact" {@Pw::isSelected($settings['layout'] == 'compact')|html}>紧凑</option></select></td><td></td></tr>
+					<tr><th>列数</th><td><input class="input length_2" type="number" min="1" max="6" name="columns" value="{$settings['columns']|html}"></td><td></td></tr>
+					<tr><th>默认数量</th><td><input class="input length_2" type="number" min="1" max="50" name="default_limit" value="{$settings['default_limit']|html}"></td><td></td></tr>
+					<tr><th>链接打开</th><td><select name="target"><option value="_blank" {@Pw::isSelected($settings['target'] == '_blank')|html}>新窗口</option><option value="_self" {@Pw::isSelected($settings['target'] == '_self')|html}>当前窗口</option></select></td><td></td></tr>
+					<tr><th>功能</th><td class="ddys-phpwind-checks">
+						<label><input type="checkbox" name="enable_styles" value="1" {@Pw::ifcheck($settings['enable_styles'])|html}> 加载样式</label>
+						<label><input type="checkbox" name="show_source_link" value="1" {@Pw::ifcheck($settings['show_source_link'])|html}> 显示源站链接</label>
+						<label><input type="checkbox" name="enable_request_form" value="1" {@Pw::ifcheck($settings['enable_request_form'])|html}> 启用求片表单</label>
+						<label><input type="checkbox" name="show_nav" value="1" {@Pw::ifcheck($settings['show_nav'])|html}> 启用短代码导航片段</label>
+						<label><input type="checkbox" name="debug" value="1" {@Pw::ifcheck($settings['debug'])|html}> 调试信息</label>
+					</td><td></td></tr>
+					<tr><th>求片间隔</th><td><input class="input length_2" type="number" min="10" max="3600" name="request_interval" value="{$settings['request_interval']|html}"> 秒</td><td></td></tr>
+				</table>
+			</div>
+			<div class="btn_wrap"><div class="btn_wrap_pd"><button class="btn btn_submit J_ajax_submit_btn" type="submit">保存设置</button></div></div>
+		</form>
+		<aside>
+			<div class="h_a">诊断</div>
+			<dl class="ddys-phpwind-diagnostics">
+				<dt>缓存文件</dt><dd>{$cacheStats['files']|html}</dd>
+				<dt>过期文件</dt><dd>{$cacheStats['expired']|html}</dd>
+				<dt>缓存大小</dt><dd>{$cacheStats['size']|html} bytes</dd>
+				<dt>前台入口</dt><dd><a href="{$pageUrl|html}" target="_blank">{$pageUrl|html}</a></dd>
+				<dt>代理入口</dt><dd>{$apiUrl|html}</dd>
+			</dl>
+			<div class="ddys-phpwind-check-list">
+				<!--# foreach ($configChecks as $check) { #-->
+				<p class="<!--# echo $check['ok'] ? 'is-ok' : 'is-warning'; #-->"><!--# echo $check['ok'] ? 'OK' : 'WARN'; #--> - {$check['label']|html}</p>
+				<!--# } #-->
+			</div>
+			<p><a class="btn" href="{$testUrl|html}">测试连接</a> <a class="btn" href="{$clearUrl|html}">清理缓存</a></p>
+			<div class="h_a">生成器</div>
+			<div class="ddys-phpwind-generator" data-ddys-page-url="{$pageUrl|html}" data-ddys-api-url="{$apiUrl|html}">
+				<select data-ddys-generator-kind><option value="shortcode">短代码</option><option value="page">前台页面</option><option value="proxy">代理 URL</option></select>
+				<select data-ddys-generator-type>
+					<!--# foreach ($shortcodes as $code) { #-->
+					<option value="{$code|html}">{$code|html}</option>
+					<!--# } #-->
+				</select>
+				<input class="input" type="text" data-ddys-generator-value placeholder="slug / id / username / q">
+				<input class="input" type="number" data-ddys-generator-limit placeholder="limit">
+				<input class="input" type="number" data-ddys-generator-page placeholder="page">
+				<textarea class="input ddys-phpwind-output" data-ddys-generator-output readonly></textarea>
+				<button class="btn" type="button" data-ddys-copy>复制</button>
+			</div>
+		</aside>
+	</div>
+</div>
+<template source='TPL:admin.common.footer' />
+</body>
+</html>

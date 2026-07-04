@@ -1,0 +1,24 @@
+<?php
+return array(
+    'api_base_url' => 'https://ddys.io/api/v1',
+    'site_base_url' => 'https://ddys.io',
+    'api_key' => '',
+    'timeout' => 12,
+    'default_cache_ttl' => 300,
+    'dictionary_cache_ttl' => 86400,
+    'fresh_cache_ttl' => 300,
+    'list_cache_ttl' => 600,
+    'detail_cache_ttl' => 1800,
+    'community_cache_ttl' => 120,
+    'theme' => 'auto',
+    'layout' => 'grid',
+    'columns' => 4,
+    'target' => '_blank',
+    'show_source_link' => 1,
+    'enable_styles' => 1,
+    'enable_request_form' => 0,
+    'show_nav' => 1,
+    'default_limit' => 12,
+    'request_interval' => 60,
+    'debug' => 0
+);
